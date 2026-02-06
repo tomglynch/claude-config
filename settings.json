@@ -1,0 +1,122 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(*)",
+      "Read(~/.claude/**)",
+      "Write(~/.claude/**)",
+      "Edit(~/.claude/**)",
+      "Bash(git clone *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git worktree *)",
+      "Bash(git fetch *)",
+      "Bash(git remote *)",
+      "Bash(git rev-parse *)",
+      "Bash(git branch *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git stash *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(git rebase *)",
+      "Bash(git merge *)",
+      "Bash(~/.claude/skills/worktree-manager/scripts/*)",
+      "Bash(cd ~/tmp/worktrees/*)",
+      "Bash(mkdir -p ~/tmp/worktrees/*)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(git -C *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr checkout *)",
+      "Bash(gh issue *)",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "Bash(pnpm *)",
+      "Bash(ls *)",
+      "Bash(find:*)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(pwd)",
+      "Bash(which *)",
+      "Bash(npm test *)",
+      "Bash(npm run lint)",
+      "Bash(vitest *)",
+      "Bash(uv run ruff:*)",
+      "Bash(uv run:*)",
+      "Bash(uv sync *)",
+      "Bash(docker ps *)",
+      "Bash(docker images *)",
+      "Bash(docker logs *)",
+      "Bash(docker inspect *)",
+      "Bash(docker stats *)",
+      "Bash(docker network ls *)",
+      "Bash(docker network inspect *)",
+      "Bash(docker volume ls *)",
+      "Bash(docker volume inspect *)",
+      "Bash(docker info *)",
+      "Bash(docker version *)",
+      "Bash(echo:*)",
+      "Bash(printf *)",
+      "Bash(pbcopy *)",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_screenshot",
+      "mcp__linear-server__get_issue",
+      "mcp__linear-server__list_issues",
+      "mcp__linear-server__list_projects",
+      "mcp__linear-server__get_project",
+      "mcp__linear-server__list_teams",
+      "mcp__linear-server__get_team",
+      "mcp__linear-server__list_comments",
+      "mcp__linear-server__get_user",
+      "mcp__linear-server__list_users",
+      "mcp__linear-server__list_documents",
+      "mcp__linear-server__get_document",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:docs.cloud.google.com)",
+      "WebFetch(domain:developer.mozilla.org)",
+      "WebFetch(domain:svelte.dev)",
+      "WebFetch(domain:kit.svelte.dev)",
+      "WebSearch"
+    ],
+    "defaultMode": "default"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); short_path=$(echo \"$cwd\" | awk -F/ '{n=NF; if(n<=3) print $0; else print \"...\" \"/\" $(n-2) \"/\" $(n-1) \"/\" $n}'); printf '\\033[1;38;5;039m√\\033[0m \\033[1;38;2;247;127;84m%s\\033[0m' \"$short_path\""
+  },
+  "enabledPlugins": {
+    "compound-engineering@every-marketplace": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo -ne '\\033]1337;SetColors=bg=2d2d3d\\007' > /dev/tty"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo -ne '\\033]1337;SetColors=bg=1a1a1a\\007' > /dev/tty"
+          }
+        ]
+      }
+    ]
+  }
+}

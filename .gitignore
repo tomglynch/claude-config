@@ -1,0 +1,47 @@
+# Secrets - NEVER commit
+.credentials.json
+*.credentials.json
+
+# Local overrides (machine-specific)
+settings.local.json
+
+# Conversation history - private
+history.jsonl
+projects/
+
+# IDE integration
+ide/
+
+# Local paths
+worktree-registry.json
+
+# Cache and ephemeral data
+cache/
+debug/
+downloads/
+file-history/
+paste-cache/
+session-env/
+shell-snapshots/
+stats-cache.json
+statsig/
+tasks/
+telemetry/
+todos/
+plans/
+
+# OS files
+.DS_Store
+
+# Image cache
+image-cache/
+
+# Plugin data (regenerated on install)
+plugins/
+
+# Keep these tracked:
+# - CLAUDE.md (global instructions)
+# - settings.json (permissions, hooks)
+# - skills/ (custom skills)
+# - scripts/ (custom scripts)
+# - plugins/installed_plugins.json (which plugins you use)
