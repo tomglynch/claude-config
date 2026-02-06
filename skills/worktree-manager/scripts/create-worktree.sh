@@ -143,21 +143,19 @@ fi
 LIGHT_COLOR=$(lighten_color "$SOURCE_COLOR")
 echo "    Base color: $SOURCE_COLOR → Worktree color: $LIGHT_COLOR"
 
-# Create .vscode directory and merge color settings into existing settings.json
+# Create .vscode directory and update color settings in existing settings.json
+# Note: settings.json may be JSONC (trailing commas, comments) so jq won't work
 mkdir -p "$WORKTREE_PATH/.vscode"
 VSCODE_SETTINGS="$WORKTREE_PATH/.vscode/settings.json"
 
-if [ -f "$VSCODE_SETTINGS" ] && command -v jq &> /dev/null; then
-    # Merge color customizations into existing settings (creates workbench.colorCustomizations if missing)
-    TMP=$(mktemp)
-    jq --arg bg "$LIGHT_COLOR" '
-        .["workbench.colorCustomizations"] = (.["workbench.colorCustomizations"] // {}) + {
-            "activityBar.background": $bg,
-            "titleBar.activeBackground": $bg,
-            "titleBar.inactiveBackground": $bg
-        }
-    ' "$VSCODE_SETTINGS" > "$TMP" && mv "$TMP" "$VSCODE_SETTINGS"
-    echo "    Merged colors into existing .vscode/settings.json"
+if [ -f "$VSCODE_SETTINGS" ]; then
+    # Replace hex color values for the three known keys using sed
+    sed -i '' \
+        -e 's/\("activityBar.background"[[:space:]]*:[[:space:]]*"\)#[0-9a-fA-F]\{6\}"/\1'"$LIGHT_COLOR"'"/' \
+        -e 's/\("titleBar.activeBackground"[[:space:]]*:[[:space:]]*"\)#[0-9a-fA-F]\{6\}"/\1'"$LIGHT_COLOR"'"/' \
+        -e 's/\("titleBar.inactiveBackground"[[:space:]]*:[[:space:]]*"\)#[0-9a-fA-F]\{6\}"/\1'"$LIGHT_COLOR"'"/' \
+        "$VSCODE_SETTINGS"
+    echo "    Updated colors in existing .vscode/settings.json"
 else
     # Create new settings file
     cat > "$VSCODE_SETTINGS" << VSCODE_EOF

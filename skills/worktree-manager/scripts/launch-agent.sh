@@ -153,20 +153,21 @@ delay 0.3
 
 -- Move right 10 times to reach the new desktop
 tell application "System Events"
-    repeat 10 times
+    repeat 16 times
         key code 124 using control down
         delay 0.1
     end repeat
 end tell
 EOF
 
-        # Step 2: Open VS Code in the worktree
-        code "$WORKTREE_PATH"
-        sleep 1
-
-        # Step 3: Create iTerm window with vertical split
+        # Step 2: Create iTerm window with vertical split
         # Make window 900x460, positioned at top-left
+        # Use "open -a iTerm" first to bring iTerm to the CURRENT space,
+        # otherwise "tell application iTerm2" switches to iTerm's existing space
         osascript <<EOF
+do shell script "open -a iTerm"
+delay 0.5
+
 tell application "iTerm2"
     create window with default profile
     tell current window
@@ -184,6 +185,9 @@ tell application "iTerm2"
     end tell
 end tell
 EOF
+
+        # Step 3: Open VS Code in the worktree
+        code "$WORKTREE_PATH"
         ;;
 
     tmux)

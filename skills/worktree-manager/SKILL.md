@@ -263,6 +263,30 @@ jq '.portPool.allocated += [8100] | .portPool.allocated |= unique | .portPool.al
 
 ---
 
+## Resolving the Repo Path
+
+The `create-worktree.sh` script requires the **source repo path** as its first argument. You must determine this BEFORE calling the script.
+
+**Resolution order (try each until one works):**
+
+1. **Check if cwd is a git repo**: `git rev-parse --show-toplevel 2>/dev/null`
+2. **Check if cwd is inside `~/tmp/worktrees/`**: If so, you're in a worktree storage directory — NOT a git repo. Look up `repoPath` from the registry instead.
+3. **Check the worktree registry**: `jq -r '.worktrees[] | select(.project == "<project>") | .repoPath' ~/.claude/worktree-registry.json | head -1` — this is the fastest and most reliable fallback.
+
+**IMPORTANT**: If `git remote get-url origin` fails, do NOT retry it or search the filesystem. The registry already has the answer — use it immediately.
+
+**Example** — cwd is `~/tmp/worktrees/toocan-app/` (not a git repo):
+```bash
+# Detect project name from directory path
+PROJECT=$(basename "$PWD")  # "toocan-app"
+# Look up repo path from registry
+REPO_PATH=$(jq -r ".worktrees[] | select(.project == \"$PROJECT\") | .repoPath" ~/.claude/worktree-registry.json | head -1)
+# Now use it
+~/.claude/skills/worktree-manager/scripts/create-worktree.sh "$REPO_PATH" feature/my-branch "My task"
+```
+
+---
+
 ## Workflows
 
 ### 1. Create Worktree (PRIMARY METHOD)
