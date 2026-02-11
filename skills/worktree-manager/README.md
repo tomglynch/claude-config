@@ -29,7 +29,7 @@ Edit `~/.claude/skills/worktree-manager/config.json` to customize:
   "claudeCommand": "claude --dangerously-skip-permissions",
   "portPool": { "start": 8100, "end": 8199 },
   "portsPerWorktree": 2,
-  "worktreeBase": "~/tmp/worktrees"
+  "worktreeBase": "~/worktrees-qz"
 }
 ```
 
@@ -40,7 +40,7 @@ Edit `~/.claude/skills/worktree-manager/config.json` to customize:
 | `claudeCommand`    | `claude --dangerously-skip-permissions` | Command to launch Claude Code                                                             |
 | `portPool`         | `8100-8199`                             | Port range for dev servers                                                                |
 | `portsPerWorktree` | `2`                                     | Ports allocated per worktree (e.g., API + frontend)                                       |
-| `worktreeBase`     | `~/tmp/worktrees`                       | Where worktrees are created                                                               |
+| `worktreeBase`     | `~/worktrees-qz`                       | Where worktrees are created                                                               |
 
 ## What This Does
 

@@ -49,7 +49,7 @@ if [ -z "$BRANCH" ] || [ -z "$TASK" ]; then
 fi
 
 BRANCH_SLUG=$(echo "$BRANCH" | tr '/' '-')
-WORKTREE_PATH="$HOME/tmp/worktrees/$PROJECT/$BRANCH_SLUG"
+WORKTREE_PATH="$HOME/worktrees-qz/$PROJECT/$BRANCH_SLUG"
 
 echo "🌳 Creating worktree for $TICKET_ID"
 echo "   Project: $PROJECT"
@@ -57,7 +57,7 @@ echo "   Branch: $BRANCH"
 echo "   Path: $WORKTREE_PATH"
 
 # Create worktree
-mkdir -p "$HOME/tmp/worktrees/$PROJECT"
+mkdir -p "$HOME/worktrees-qz/$PROJECT"
 if git show-ref --verify --quiet "refs/heads/$BRANCH" 2>/dev/null; then
     git worktree add "$WORKTREE_PATH" "$BRANCH"
 else

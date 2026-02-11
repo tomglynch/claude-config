@@ -14,7 +14,7 @@
 #
 # Example:
 #   ./register.sh obsidian-ai-agent feature/auth feature-auth \
-#     ~/tmp/worktrees/obsidian-ai-agent/feature-auth \
+#     ~/worktrees-qz/obsidian-ai-agent/feature-auth \
 #     ~/Projects/obsidian-ai-agent \
 #     8100,8101 "Implement OAuth"
 

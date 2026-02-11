@@ -12,7 +12,7 @@ ALIAS="$2"
 TARGET="."
 
 # Check if in a worktree
-if [[ "$PWD" != *"/tmp/worktrees/"* ]]; then
+if [[ "$PWD" != *"/worktrees-qz/"* ]]; then
   # Not in worktree - check if current branch matches one
   BRANCH=$(git branch --show-current 2>/dev/null)
   if [[ -n "$BRANCH" && -f ~/.claude/worktree-registry.json ]]; then

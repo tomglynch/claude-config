@@ -53,7 +53,7 @@ BRANCH_SLUG=$(echo "$BRANCH" | tr '/' '-')
 echo "    Branch: $BRANCH (slug: $BRANCH_SLUG)"
 
 # --- Step 3: Determine worktree path ---
-WORKTREE_BASE="$HOME/tmp/worktrees"
+WORKTREE_BASE="$HOME/worktrees-qz"
 WORKTREE_PATH="$WORKTREE_BASE/$PROJECT/$BRANCH_SLUG"
 echo "    Path: $WORKTREE_PATH"
 

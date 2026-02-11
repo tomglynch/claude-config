@@ -103,7 +103,7 @@ if [ -n "$ENTRY" ]; then
 else
     # Construct default path
     BRANCH_SLUG=$(echo "$BRANCH" | tr '/' '-')
-    WORKTREE_PATH="$HOME/tmp/worktrees/$PROJECT/$BRANCH_SLUG"
+    WORKTREE_PATH="$HOME/worktrees-qz/$PROJECT/$BRANCH_SLUG"
     REPO_PATH=""
     PORTS=""
 fi

@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Read(*)",
+      "Glob(*)",
       "Read(~/.claude/**)",
       "Write(~/.claude/**)",
       "Edit(~/.claude/**)",
@@ -24,8 +25,10 @@
       "Bash(git rebase *)",
       "Bash(git merge *)",
       "Bash(~/.claude/skills/worktree-manager/scripts/*)",
-      "Bash(cd ~/tmp/worktrees/*)",
-      "Bash(mkdir -p ~/tmp/worktrees/*)",
+      "Bash(cd * && git *)",
+      "Bash(cd * && gh *)",
+      "Bash(cd ~/worktrees-qz/*)",
+      "Bash(mkdir -p ~/worktrees-qz/*)",
       "Bash(mkdir *)",
       "Bash(cp *)",
       "Bash(git -C *)",
@@ -90,13 +93,6 @@
     ],
     "defaultMode": "default"
   },
-  "statusLine": {
-    "type": "command",
-    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); short_path=$(echo \"$cwd\" | awk -F/ '{n=NF; if(n<=3) print $0; else print \"...\" \"/\" $(n-2) \"/\" $(n-1) \"/\" $n}'); printf '\\033[1;38;5;039m√\\033[0m \\033[1;38;2;247;127;84m%s\\033[0m' \"$short_path\""
-  },
-  "enabledPlugins": {
-    "compound-engineering@every-marketplace": true
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -118,5 +114,12 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); short_path=$(echo \"$cwd\" | awk -F/ '{n=NF; if(n<=3) print $0; else print \"...\" \"/\" $(n-2) \"/\" $(n-1) \"/\" $n}'); printf '\\033[1;38;5;039m√\\033[0m \\033[1;38;2;247;127;84m%s\\033[0m' \"$short_path\""
+  },
+  "enabledPlugins": {
+    "compound-engineering@every-marketplace": true
   }
 }

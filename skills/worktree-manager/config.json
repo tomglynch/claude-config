@@ -7,7 +7,7 @@
     "end": 8199
   },
   "portsPerWorktree": 2,
-  "worktreeBase": "~/tmp/worktrees",
+  "worktreeBase": "~/worktrees-qz",
   "registryPath": "~/.claude/worktree-registry.json",
   "defaultCopyDirs": [".agents", ".env.example", ".env"],
   "healthCheckTimeout": 30,
