@@ -138,27 +138,27 @@ case "$TERMINAL" in
         SHELL_PANE_CMD="cd '${WORKTREE_PATH}'"
 
         # Step 1: Create new desktop and switch to it
-        osascript <<EOF
-tell application "System Events" to tell application process "Dock"
-    key code 160
-    delay 1
-    tell group 2 of group 1 of group 1
-        click (buttons whose description is "add desktop")
-    end tell
-    delay 0.3
-    key code 53
-end tell
+#         osascript <<EOF
+# tell application "System Events" to tell application process "Dock"
+#     key code 160
+#     delay 1
+#     tell group 2 of group 1 of group 1
+#         click (buttons whose description is "add desktop")
+#     end tell
+#     delay 0.3
+#     key code 53
+# end tell
 
-delay 0.3
+# delay 0.3
 
--- Move right 10 times to reach the new desktop
-tell application "System Events"
-    repeat 16 times
-        key code 124 using control down
-        delay 0.1
-    end repeat
-end tell
-EOF
+# -- Move right 10 times to reach the new desktop
+# tell application "System Events"
+#     repeat 16 times
+#         key code 124 using control down
+#         delay 0.1
+#     end repeat
+# end tell
+# EOF
 
         # Step 2: Create iTerm window with vertical split
         # Make window 900x460, positioned at top-left
