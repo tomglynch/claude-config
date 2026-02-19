@@ -19,6 +19,14 @@ if [ -z "$WORKTREE_PATH" ]; then
     exit 1
 fi
 
+# Write task to file to avoid shell escaping issues with special characters
+# (backticks, quotes, parentheses in markdown break when passed through
+# bash → AppleScript → zsh/fish)
+if [ -n "$TASK" ]; then
+    TASK_FILE="$WORKTREE_PATH/.claude-task"
+    printf '%s\n' "$TASK" > "$TASK_FILE"
+fi
+
 # Auto-detect available terminal
 detect_terminal() {
     if [ -d "/Applications/Ghostty.app" ]; then echo "ghostty"
@@ -97,18 +105,20 @@ BRANCH=$(cd "$WORKTREE_PATH" && git branch --show-current 2>/dev/null || basenam
 PROJECT=$(basename "$(dirname "$WORKTREE_PATH")")
 
 # Build the command to run in the new terminal
+# Task is always read from .claude-task file to avoid shell escaping issues
 # Use configured command (cc) - fish syntax compatible
 # For fish: use 'or' instead of '||' for fallback, and avoid subshells
+SAFE_PROMPT="Read and execute the task described in .claude-task"
 if [ "$SHELL_CMD" = "fish" ]; then
     if [ -n "$TASK" ]; then
-        INNER_CMD="cd '$WORKTREE_PATH'; and echo '🌳 Worktree: $PROJECT / $BRANCH'; and echo '📋 Task: $TASK'; and echo ''; and $CLAUDE_CMD; or claude"
+        INNER_CMD="cd '$WORKTREE_PATH'; and echo '🌳 Worktree: $PROJECT / $BRANCH'; and echo ''; and $CLAUDE_CMD '$SAFE_PROMPT'; or claude '$SAFE_PROMPT'"
     else
         INNER_CMD="cd '$WORKTREE_PATH'; and echo '🌳 Worktree: $PROJECT / $BRANCH'; and echo ''; and $CLAUDE_CMD; or claude"
     fi
 else
     # bash/zsh syntax
     if [ -n "$TASK" ]; then
-        INNER_CMD="cd '$WORKTREE_PATH' && echo '🌳 Worktree: $PROJECT / $BRANCH' && echo '📋 Task: $TASK' && echo '' && ($CLAUDE_CMD || claude)"
+        INNER_CMD="cd '$WORKTREE_PATH' && echo '🌳 Worktree: $PROJECT / $BRANCH' && echo '' && ($CLAUDE_CMD '$SAFE_PROMPT' || claude '$SAFE_PROMPT')"
     else
         INNER_CMD="cd '$WORKTREE_PATH' && echo '🌳 Worktree: $PROJECT / $BRANCH' && echo '' && ($CLAUDE_CMD || claude)"
     fi
@@ -126,12 +136,9 @@ case "$TERMINAL" in
         ;;
 
     iterm2|iterm)
-        # Build command - escape backslashes and double quotes for AppleScript
+        # Build command - task is read from .claude-task file to avoid escaping issues
         if [ -n "$TASK" ]; then
-            # Escape backslashes first, then double quotes
-            ESCAPED_TASK="${TASK//\\/\\\\}"
-            ESCAPED_TASK="${ESCAPED_TASK//\"/\\\"}"
-            CLAUDE_PANE_CMD="cd '${WORKTREE_PATH}' && ${CLAUDE_CMD} \\\"${ESCAPED_TASK}\\\""
+            CLAUDE_PANE_CMD="cd '${WORKTREE_PATH}' && ${CLAUDE_CMD} '${SAFE_PROMPT}'"
         else
             CLAUDE_PANE_CMD="cd '${WORKTREE_PATH}' && ${CLAUDE_CMD}"
         fi
@@ -225,11 +232,9 @@ EOF
         ;;
 
     terminal)
-        # macOS default Terminal.app - escape for AppleScript
+        # macOS default Terminal.app - task read from .claude-task file
         if [ -n "$TASK" ]; then
-            ESCAPED_TASK="${TASK//\\/\\\\}"
-            ESCAPED_TASK="${ESCAPED_TASK//\"/\\\"}"
-            CMD="cd '${WORKTREE_PATH}' && ${CLAUDE_CMD} \\\"${ESCAPED_TASK}\\\""
+            CMD="cd '${WORKTREE_PATH}' && ${CLAUDE_CMD} '${SAFE_PROMPT}'"
         else
             CMD="cd '${WORKTREE_PATH}' && ${CLAUDE_CMD}"
         fi

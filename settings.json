@@ -25,6 +25,7 @@
       "Bash(git rebase *)",
       "Bash(git merge *)",
       "Bash(~/.claude/skills/worktree-manager/scripts/*)",
+      "Bash(~/.claude/skills/search-history/search-history.sh *)",
       "Bash(cd * && git *)",
       "Bash(cd * && gh *)",
       "Bash(cd ~/worktrees-qz/*)",
@@ -99,7 +100,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo -ne '\\033]1337;SetColors=bg=2d2d3d\\007' > /dev/tty"
+            "command": "printf '\\033]1337;SetColors=bg=2d2d3d\\007' > /dev/tty"
           }
         ]
       }
@@ -109,7 +110,37 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo -ne '\\033]1337;SetColors=bg=1a1a1a\\007' > /dev/tty"
+            "command": "printf '\\033]1337;SetColors=bg=1a1a1a\\007' > /dev/tty"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/ccnotify/ccnotify.py UserPromptSubmit"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/ccnotify/ccnotify.py Stop"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+{
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/ccnotify/ccnotify.py Notification"
           }
         ]
       }
@@ -117,9 +148,18 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); short_path=$(echo \"$cwd\" | awk -F/ '{n=NF; if(n<=3) print $0; else print \"...\" \"/\" $(n-2) \"/\" $(n-1) \"/\" $n}'); printf '\\033[1;38;5;039m√\\033[0m \\033[1;38;2;247;127;84m%s\\033[0m' \"$short_path\""
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); short_path=$(echo \"$cwd\" | awk -F/ '{n=NF; if(n<=3) print $0; else print \"...\" \"/\" $(n-2) \"/\" $(n-1) \"/\" $n}'); rem=$(echo \"$input\" | jq -r '.context_window.remaining_percentage // empty'); if [ -n \"$rem\" ]; then if [ \"$rem\" -lt 25 ]; then color='\\033[38;5;196m'; elif [ \"$rem\" -lt 50 ]; then color='\\033[38;5;214m'; else color='\\033[38;5;242m'; fi; ctx=\" ${color}${rem}%\\033[0m\"; else ctx=''; fi; printf '\\033[1;38;5;039m√\\033[0m \\033[1;38;2;247;127;84m%s\\033[0m%b' \"$short_path\" \"$ctx\""
   },
   "enabledPlugins": {
-    "compound-engineering@every-marketplace": true
-  }
+    "compound-engineering@every-marketplace": true,
+    "code-simplifier@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "greptile@claude-plugins-official": true,
+    "linear@claude-plugins-official": true
+  },
+  "skipDangerousModePermissionPrompt": true
 }

@@ -401,9 +401,19 @@ git push origin --delete feature/auth
 
 ### 5. Create PR from Worktree
 
-When creating a PR from a worktree branch, update the registry with the PR number:
+When creating a PR from a worktree branch:
+
+1. **Default to draft PR** — always create as draft unless the user explicitly asks for a ready-to-review PR.
+2. **Ask the user** before creating: "Should this be a draft PR (default) or ready for review?"
+3. Update the registry with the PR number after creation.
 
 ```bash
+# Create as draft PR (default)
+gh pr create --draft --title "..." --body "..."
+
+# Or if user wants ready for review:
+gh pr create --title "..." --body "..."
+
 # After gh pr create succeeds, get the PR number
 BRANCH=$(git branch --show-current)
 PR_NUM=$(gh pr view --json number -q '.number')

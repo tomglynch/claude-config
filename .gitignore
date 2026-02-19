@@ -30,6 +30,19 @@ telemetry/
 todos/
 plans/
 
+# Backups
+backups/
+
+# Logs
+ccnotify/*.log
+ccnotify/*.log.*
+ccnotify/*.db
+ccnotify/__pycache__/
+scripts/linear-poller/logs/
+
+# Notifications state
+claude-devtools-notifications.json
+
 # OS files
 .DS_Store
 
