@@ -109,6 +109,10 @@ Use `cwd` (not `project_full`) for resume commands, since worktree sessions have
 
 ## Output Formats
 
+### Linear issue references
+
+When a first message references a Linear issue (e.g. "plan PRO-596", "worktree for PRO-548"), look up the issue title via the Linear MCP tools and include it in the summary. For example, write "planned Add gRPC tracing for Firestore calls (PRO-596)" not just "planned PRO-596".
+
 ### Date mode — daily summary
 
 Group sessions by project, show as compact table:
