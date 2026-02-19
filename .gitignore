@@ -39,6 +39,7 @@ ccnotify/*.log.*
 ccnotify/*.db
 ccnotify/__pycache__/
 scripts/linear-poller/logs/
+scripts/linear-poller/.env
 
 # Notifications state
 claude-devtools-notifications.json
