@@ -89,10 +89,10 @@ class ClaudePromptTracker:
         session_id = data.get("session_id")
 
         # User is back — dismiss any pending notification for this session
-        iterm_session, _ = _parse_iterm_session_id()
-        if iterm_session:
+        _, session_uuid = _parse_iterm_session_id()
+        if session_uuid:
             subprocess.run(
-                ["terminal-notifier", "-remove", iterm_session],
+                ["terminal-notifier", "-remove", session_uuid],
                 check=False, capture_output=True
             )
 
@@ -280,7 +280,7 @@ class ClaudePromptTracker:
                 "-sound", "default",
                 "-title", title,
                 "-subtitle", f"{subtitle}\n{current_time}",
-                "-group", iterm_session or "claude-code",
+                "-group", session_uuid or "claude-code",
             ]
 
             if session_uuid:

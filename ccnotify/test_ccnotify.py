@@ -180,7 +180,7 @@ class TestSendNotification(unittest.TestCase):
 
         cmd = mock_run.call_args_list[1][0][0]
         group_idx = cmd.index("-group")
-        self.assertEqual(cmd[group_idx + 1], "w1t0p0:MY-UUID")
+        self.assertEqual(cmd[group_idx + 1], "MY-UUID")
 
     @patch.dict(os.environ, {"ITERM_SESSION_ID": "w1t0p0:MY-UUID"})
     @patch("ccnotify.time.sleep")
@@ -219,7 +219,7 @@ class TestPromptSubmitDismissesNotification(unittest.TestCase):
 
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]
-        self.assertEqual(cmd, ["terminal-notifier", "-remove", "w1t0p0:MY-UUID"])
+        self.assertEqual(cmd, ["terminal-notifier", "-remove", "MY-UUID"])
 
 
 class TestFormatDuration(unittest.TestCase):
